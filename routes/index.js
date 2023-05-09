@@ -8,6 +8,12 @@ const usersRoutes = require('./users');
 const moviesRoutes = require('./movies');
 const { handleNotFoundUrl, handleErrors } = require('../middlewares/errors');
 const { userLoginValidate, userCreateValidate } = require('../middlewares/userValidation');
+const { requestLogger, errorLogger } = require('../middlewares/logger');
+
+// =============================================================================
+
+// логирование запросов
+routes.use(requestLogger);
 
 // registration route
 routes.post('/signup', express.json(), userCreateValidate, createUser);
@@ -20,6 +26,9 @@ routes.use(auth);
 routes.use('/users', usersRoutes);
 routes.use('/movies', moviesRoutes);
 routes.use(handleNotFoundUrl);
+
+// логирование ошибок
+routes.use(errorLogger);
 
 // handler celebrate validator
 routes.use(errors());

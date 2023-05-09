@@ -4,6 +4,8 @@ const moviesRoutes = express.Router();
 const { getMovies, createMovie, deleteMovie } = require('../controllers/movies');
 const { movieValidate, movieIdValidate } = require('../middlewares/movieValidation');
 
+// =============================================================================
+
 // возвращает все сохранённые текущим  пользователем фильмы
 // GET /movies
 moviesRoutes.get('', getMovies);

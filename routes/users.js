@@ -4,6 +4,8 @@ const usersRoutes = express.Router();
 const { getUser, updateUser } = require('../controllers/users');
 const { userUpdateValidate } = require('../middlewares/userValidation');
 
+// =============================================================================
+
 // возвращает информацию о пользователе (email и имя)
 // GET /users/me
 usersRoutes.get('/me', getUser);
