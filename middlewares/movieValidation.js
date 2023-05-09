@@ -2,28 +2,63 @@ const { celebrate, Joi } = require('celebrate');
 
 const { urlRegExp } = require('../utils/regExp');
 
-const cardValidate = celebrate({
+const movieValidate = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30).required()
-      .messages({
-        'string.min': 'Название должно быть не короче 2 симв.',
-        'string.max': 'Название должно быть не длиннее 30 симв.',
-        'string.empty': 'Поле "name" должно быть заполнено',
-      }),
-    link: Joi.string()
+    country: Joi.string().required().messages({
+      'string.empty': 'Поле "country" должно быть заполнено',
+    }),
+    director: Joi.string().required().messages({
+      'string.empty': 'Поле "director" должно быть заполнено',
+    }),
+    duration: Joi.number().required().messages({
+      'string.empty': 'Поле "duration" должно быть заполнено',
+    }),
+    year: Joi.string().required().messages({
+      'string.empty': 'Поле "year" должно быть заполнено',
+    }),
+    description: Joi.string().required().messages({
+      'string.empty': 'Поле "description" должно быть заполнено',
+    }),
+    image: Joi.string()
       .required()
       .pattern(urlRegExp)
-      .message('Введите URL места')
+      .message('Введите URL')
       .messages({
-        'string.empty': 'Поле "link" должно быть заполнено',
+        'string.empty': 'Поле "image" должно быть заполнено',
       }),
+    trailerLink: Joi.string()
+      .required()
+      .pattern(urlRegExp)
+      .message('Введите URL')
+      .messages({
+        'string.empty': 'Поле "trailerLink" должно быть заполнено',
+      }),
+    thumbnail: Joi.string()
+      .required()
+      .pattern(urlRegExp)
+      .message('Введите URL')
+      .messages({
+        'string.empty': 'Поле "thumbnail" должно быть заполнено',
+      }),
+    movieId: Joi.string().required().hex().length(24)
+      .messages({
+        'string.empty': 'Поле "movieId" должно быть заполнено',
+        'string.hex': 'Поле "movieId" должно быть шестнадцатеричным числом',
+        'string.length': 'Поле "movieId" должно быть 24 симв.',
+      }),
+    nameRU: Joi.string().required().messages({
+      'string.empty': 'Поле "nameRU" должно быть заполнено',
+    }),
+    nameEN: Joi.string().required().messages({
+      'string.empty': 'Поле "nameEN" должно быть заполнено',
+    }),
   }),
 });
 
-const cardIdValidate = celebrate({
+const movieIdValidate = celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().required().hex().length(24),
   }),
 });
 
-module.exports = { cardValidate, cardIdValidate };
+module.exports = { movieValidate, movieIdValidate };
