@@ -1,49 +1,85 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
+const { urlRegExp, nameRuRegExp, nameEnRegExp } = require('../utils/regExp');
 
 const { Schema, model } = mongoose;
 
-const movieSchema = new Schema({
-  country: {
-    type: String,
+const movieSchema = new Schema(
+  {
+    country: {
+      type: String,
+      required: true,
+    },
+    director: {
+      type: String,
+      required: true,
+    },
+    duration: {
+      type: Number,
+      required: true,
+    },
+    year: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
+      validate: {
+        validator: (v) => urlRegExp.test(v),
+      },
+    },
+    trailerLink: {
+      type: String,
+      required: true,
+      validate: {
+        validator: (v) => urlRegExp.test(v),
+      },
+    },
+    thumbnail: {
+      type: String,
+      required: true,
+      validate: {
+        validator: (v) => urlRegExp.test(v),
+      },
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
+    movieId: {
+      type: String,
+      required: true,
+      minlength: 24,
+      maxlength: 24,
+      validate: {
+        validator: (v) => validator.isHexadecimal(v),
+      },
+    },
+    nameRU: {
+      type: String,
+      required: true,
+      validate: {
+        validator: (v) => nameRuRegExp.test(v),
+      },
+    },
+    nameEN: {
+      type: String,
+      required: true,
+      validate: {
+        validator: (v) => nameEnRegExp.test(v),
+      },
+    },
   },
-  director: {
-    type: String,
-  },
-  duration: {
-    type: Number,
-  },
-  year: {
-    type: String,
-  },
-  description: {
-    type: String,
-  },
-  image: {
-    type: String,
-  },
-  trailerLink: {
-    type: String,
-  },
-  thumbnail: {
-    type: String,
-  },
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: 'user',
-    required: true,
-  },
-  movieId: {
-    type: String,
-  },
-  nameRU: {
-    type: String,
-  },
-  nameEN: {
-    type: String,
-  },
-}, { versionKey: false });
+  { versionKey: false },
+);
 
 movieSchema.statics.delJustOwnMovie = function foo(movieId, userId) {
   return this.findById(movieId).then((movie) => {
@@ -51,7 +87,8 @@ movieSchema.statics.delJustOwnMovie = function foo(movieId, userId) {
       return Promise.reject(
         new NotFoundError('Фильм с указанным _id не найден'),
       );
-    } if (movie.owner.toString() !== userId) {
+    }
+    if (movie.owner.toString() !== userId) {
       return Promise.reject(
         new ForbiddenError('Нет доступа на удалению чужого фильма'),
       );
