@@ -31,7 +31,7 @@ const deleteMovie = (req, res, next) => {
   const { movieId } = req.params;
 
   Movie.delJustOwnMovie(movieId, req.user._id)
-    .then((movie) => res.status(OK).send(movie))
+    .then(() => res.status(OK).send({ message: 'Фильм успешно удалён' }))
     .catch(next);
 };
 
