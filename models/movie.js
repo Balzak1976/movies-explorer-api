@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
-const { urlRegExp, nameRuRegExp, nameEnRegExp } = require('../utils/regExp');
+const { urlRegExp } = require('../utils/regExp');
 
 const { Schema, model } = mongoose;
 
@@ -66,16 +66,10 @@ const movieSchema = new Schema(
     nameRU: {
       type: String,
       required: true,
-      validate: {
-        validator: (v) => nameRuRegExp.test(v),
-      },
     },
     nameEN: {
       type: String,
       required: true,
-      validate: {
-        validator: (v) => nameEnRegExp.test(v),
-      },
     },
   },
   { versionKey: false },

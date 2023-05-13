@@ -1,6 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
 
-const { urlRegExp, nameRuRegExp, nameEnRegExp } = require('../utils/regExp');
+const { urlRegExp } = require('../utils/regExp');
 
 const movieValidate = celebrate({
   body: Joi.object().keys({
@@ -48,15 +48,11 @@ const movieValidate = celebrate({
       }),
     nameRU: Joi.string()
       .required()
-      .pattern(nameRuRegExp)
-      .message('Введите название на русском')
       .messages({
         'string.empty': 'Поле "nameRU" должно быть заполнено',
       }),
     nameEN: Joi.string()
       .required()
-      .pattern(nameEnRegExp)
-      .message('Введите название на английском')
       .messages({
         'string.empty': 'Поле "nameEN" должно быть заполнено',
       }),
