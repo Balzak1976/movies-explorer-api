@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
 const { urlRegExp } = require('../utils/regExp');
@@ -55,13 +54,8 @@ const movieSchema = new Schema(
       required: true,
     },
     movieId: {
-      type: String,
+      type: Number,
       required: true,
-      minlength: 24,
-      maxlength: 24,
-      validate: {
-        validator: (v) => validator.isHexadecimal(v),
-      },
     },
     nameRU: {
       type: String,

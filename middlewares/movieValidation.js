@@ -40,11 +40,9 @@ const movieValidate = celebrate({
       .messages({
         'string.empty': 'Поле "thumbnail" должно быть заполнено',
       }),
-    movieId: Joi.string().required().hex().length(24)
+    movieId: Joi.number().required()
       .messages({
         'string.empty': 'Поле "movieId" должно быть заполнено',
-        'string.hex': 'Поле "movieId" должно быть шестнадцатеричным числом',
-        'string.length': 'Поле "movieId" должно быть 24 симв.',
       }),
     nameRU: Joi.string()
       .required()
