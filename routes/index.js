@@ -7,6 +7,7 @@ const auth = require('../middlewares/auth');
 const usersRoutes = require('./users');
 const moviesRoutes = require('./movies');
 const { handleNotFoundUrl, handleErrors } = require('../middlewares/errors');
+const { limiter } = require('../middlewares/limiter');
 const { userLoginValidate, userCreateValidate } = require('../middlewares/userValidation');
 const { requestLogger, errorLogger } = require('../middlewares/logger');
 
@@ -14,6 +15,9 @@ const { requestLogger, errorLogger } = require('../middlewares/logger');
 
 // логирование запросов
 routes.use(requestLogger);
+
+// чтобы число запросов с одного IP в единицу времени было ограничено.
+routes.use(limiter);
 
 // registration route
 routes.post('/signup', express.json(), userCreateValidate, createUser);
