@@ -1,9 +1,8 @@
 const http2 = require('node:http2');
 const bcrypt = require('bcrypt');
 
-const { handleNotFoundError } = require('../errors/handlers');
+const { handleNotFoundError, handleConflictError } = require('../errors/handlers');
 const { createToken } = require('../utils/jwt');
-const ConflictError = require('../errors/ConflictError');
 const User = require('../models/user');
 
 const OK = http2.constants.HTTP_STATUS_OK; // 200
@@ -24,12 +23,7 @@ const createUser = (req, res, next) => {
 
       return res.status(CREATED).send(userNoPassword);
     })
-    .catch((err) => {
-      if (err.code === 11000) {
-        return next(new ConflictError('Данный email уже зарегистрирован'));
-      }
-      return next(err);
-    });
+    .catch((err) => handleConflictError(err, next));
 };
 
 // POST /signin
@@ -59,7 +53,7 @@ const updateUser = (req, res, next) => {
 
   User.findByIdAndUpdate(id, { email, name }, { new: true, runValidators: true })
     .then((user) => handleNotFoundError(user, res, userNotFoundMsg))
-    .catch(next);
+    .catch((err) => handleConflictError(err, next));
 };
 
 module.exports = {

@@ -1,5 +1,6 @@
 const http2 = require('node:http2');
 const NotFoundError = require('./NotFoundError');
+const ConflictError = require('./ConflictError');
 
 const OK = http2.constants.HTTP_STATUS_OK;
 
@@ -10,4 +11,11 @@ const handleNotFoundError = (data, res, message) => {
   return res.status(OK).send(data);
 };
 
-module.exports = { handleNotFoundError };
+const handleConflictError = (err, next) => {
+  if (err.code === 11000) {
+    return next(new ConflictError('Данный email уже зарегистрирован'));
+  }
+  return next(err);
+};
+
+module.exports = { handleNotFoundError, handleConflictError };
