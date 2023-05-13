@@ -6,7 +6,9 @@ const CREATED = http2.constants.HTTP_STATUS_CREATED; // 201
 
 // GET /movies
 const getMovies = (req, res, next) => {
-  Movie.find({})
+  const { _id: owner } = req.user;
+
+  Movie.find({ owner })
     .populate(['owner'])
     .sort({ createdAt: -1 })
     .then((movie) => res.send(movie))
