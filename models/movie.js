@@ -78,7 +78,7 @@ movieSchema.statics.delJustOwnMovie = function foo(movieId, userId) {
     }
     if (movie.owner.toString() !== userId) {
       return Promise.reject(
-        new ForbiddenError('Нет доступа на удалению чужого фильма'),
+        new ForbiddenError('Нет доступа на удаление чужого фильма'),
       );
     }
     return movie.deleteOne();

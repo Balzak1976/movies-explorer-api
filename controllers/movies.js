@@ -30,9 +30,9 @@ const createMovie = (req, res, next) => {
 // удаляет сохранённый фильм по id
 // DELETE /movies/_id
 const deleteMovie = (req, res, next) => {
-  const { movieId } = req.params;
+  const { mongoId } = req.params;
 
-  Movie.delJustOwnMovie(movieId, req.user._id)
+  Movie.delJustOwnMovie(mongoId, req.user._id)
     .then(() => res.status(OK).send({ message: 'Фильм успешно удалён' }))
     .catch(next);
 };

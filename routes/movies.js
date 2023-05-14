@@ -18,6 +18,6 @@ moviesRoutes.post('/', express.json(), movieValidate, createMovie);
 
 // удаляет сохранённый фильм по id
 // DELETE /movies/_id
-moviesRoutes.delete('/:movieId', movieIdValidate, deleteMovie);
+moviesRoutes.delete('/:mongoId', movieIdValidate, deleteMovie);
 
 module.exports = moviesRoutes;
