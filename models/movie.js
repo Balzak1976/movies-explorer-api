@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
 const { urlRegExp } = require('../utils/regExp');
+const {
+  MOVIE_ID_NOT_FOUND_MSG,
+  MOVIE_FORBIDDEN_DEL_MSG,
+} = require('../utils/constants');
+
+// =============================================================================
 
 const { Schema, model } = mongoose;
 
@@ -73,12 +79,12 @@ movieSchema.statics.delJustOwnMovie = function foo(movieId, userId) {
   return this.findById(movieId).then((movie) => {
     if (!movie) {
       return Promise.reject(
-        new NotFoundError('Фильм с указанным _id не найден'),
+        new NotFoundError(MOVIE_ID_NOT_FOUND_MSG),
       );
     }
     if (movie.owner.toString() !== userId) {
       return Promise.reject(
-        new ForbiddenError('Нет доступа на удаление чужого фильма'),
+        new ForbiddenError(MOVIE_FORBIDDEN_DEL_MSG),
       );
     }
     return movie.deleteOne();

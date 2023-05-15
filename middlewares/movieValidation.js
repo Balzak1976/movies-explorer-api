@@ -1,59 +1,39 @@
 const { celebrate, Joi } = require('celebrate');
-
 const { urlRegExp } = require('../utils/regExp');
+const { MOVIE_VALIDATOR_MSG } = require('../utils/constants');
+
+// =============================================================================
 
 const movieValidate = celebrate({
   body: Joi.object().keys({
-    country: Joi.string().required().messages({
-      'string.empty': 'Поле "country" должно быть заполнено',
-    }),
-    director: Joi.string().required().messages({
-      'string.empty': 'Поле "director" должно быть заполнено',
-    }),
-    duration: Joi.number().required().messages({
-      'string.empty': 'Поле "duration" должно быть заполнено',
-    }),
-    year: Joi.string().required().messages({
-      'string.empty': 'Поле "year" должно быть заполнено',
-    }),
-    description: Joi.string().required().messages({
-      'string.empty': 'Поле "description" должно быть заполнено',
-    }),
+    country: Joi.string().required().messages(MOVIE_VALIDATOR_MSG.COUNTRY),
+    director: Joi.string().required().messages(MOVIE_VALIDATOR_MSG.DIRECTOR),
+    duration: Joi.number().required().messages(MOVIE_VALIDATOR_MSG.DURATION),
+    year: Joi.string().required().messages(MOVIE_VALIDATOR_MSG.YEAR),
+    description: Joi.string().required().messages(MOVIE_VALIDATOR_MSG.DESCRIPTION),
     image: Joi.string()
       .required()
       .pattern(urlRegExp)
-      .message('Введите URL')
-      .messages({
-        'string.empty': 'Поле "image" должно быть заполнено',
-      }),
+      .message(MOVIE_VALIDATOR_MSG.URL_REG_EXP)
+      .messages(MOVIE_VALIDATOR_MSG.IMAGE),
     trailerLink: Joi.string()
       .required()
       .pattern(urlRegExp)
-      .message('Введите URL')
-      .messages({
-        'string.empty': 'Поле "trailerLink" должно быть заполнено',
-      }),
+      .message(MOVIE_VALIDATOR_MSG.URL_REG_EXP)
+      .messages(MOVIE_VALIDATOR_MSG.TRAILER),
     thumbnail: Joi.string()
       .required()
       .pattern(urlRegExp)
-      .message('Введите URL')
-      .messages({
-        'string.empty': 'Поле "thumbnail" должно быть заполнено',
-      }),
+      .message(MOVIE_VALIDATOR_MSG.URL_REG_EXP)
+      .messages(MOVIE_VALIDATOR_MSG.THUMBNAIL),
     movieId: Joi.number().required()
-      .messages({
-        'string.empty': 'Поле "movieId" должно быть заполнено',
-      }),
+      .messages(MOVIE_VALIDATOR_MSG.MOVIE_ID),
     nameRU: Joi.string()
       .required()
-      .messages({
-        'string.empty': 'Поле "nameRU" должно быть заполнено',
-      }),
+      .messages(MOVIE_VALIDATOR_MSG.NAME_RU),
     nameEN: Joi.string()
       .required()
-      .messages({
-        'string.empty': 'Поле "nameEN" должно быть заполнено',
-      }),
+      .messages(MOVIE_VALIDATOR_MSG.NAME_EN),
   }),
 });
 

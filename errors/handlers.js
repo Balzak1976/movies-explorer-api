@@ -1,8 +1,12 @@
-const http2 = require('node:http2');
 const NotFoundError = require('./NotFoundError');
 const ConflictError = require('./ConflictError');
+const {
+  OK,
+  AUTH_EMAIL_EXISTS_MSG,
+  MONGO_DUPLICATE_KEY,
+} = require('../utils/constants');
 
-const OK = http2.constants.HTTP_STATUS_OK;
+// =============================================================================
 
 const handleNotFoundError = (data, res, message) => {
   if (!data) {
@@ -12,8 +16,8 @@ const handleNotFoundError = (data, res, message) => {
 };
 
 const handleConflictError = (err, next) => {
-  if (err.code === 11000) {
-    return next(new ConflictError('Данный email уже зарегистрирован'));
+  if (err.code === MONGO_DUPLICATE_KEY) {
+    return next(new ConflictError(AUTH_EMAIL_EXISTS_MSG));
   }
   return next(err);
 };

@@ -1,8 +1,5 @@
-const http2 = require('node:http2');
 const Movie = require('../models/movie');
-
-const OK = http2.constants.HTTP_STATUS_OK; // 200
-const CREATED = http2.constants.HTTP_STATUS_CREATED; // 201
+const { OK, CREATED, MOVIE_SUCCESS_DEL_MSG } = require('../utils/constants');
 
 // GET /movies
 const getMovies = (req, res, next) => {
@@ -33,7 +30,7 @@ const deleteMovie = (req, res, next) => {
   const { mongoId } = req.params;
 
   Movie.delJustOwnMovie(mongoId, req.user._id)
-    .then(() => res.status(OK).send({ message: 'Фильм успешно удалён' }))
+    .then(() => res.status(OK).send({ message: MOVIE_SUCCESS_DEL_MSG }))
     .catch(next);
 };
 

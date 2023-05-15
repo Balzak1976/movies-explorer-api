@@ -1,10 +1,10 @@
-const http2 = require('node:http2');
 const NotFoundError = require('../errors/NotFoundError');
+const { SERVER_ERROR, URL_NOT_FOUND_MSG, SERVER_INTERNAL_ERROR_MSG } = require('../utils/constants');
 
-const SERVER_ERROR = http2.constants.HTTP_STATUS_INTERNAL_SERVER_ERROR; // 500
+// =============================================================================
 
 const handleNotFoundUrl = (req, res, next) => {
-  next(new NotFoundError('По указанному url ничего нет'));
+  next(new NotFoundError(URL_NOT_FOUND_MSG));
 };
 
 const handleErrors = (err, req, res, next) => {
@@ -12,7 +12,7 @@ const handleErrors = (err, req, res, next) => {
 
   res.status(statusCode).send({
     message: statusCode === SERVER_ERROR
-      ? `На сервере произошла ошибка${err}`
+      ? SERVER_INTERNAL_ERROR_MSG
       : message,
   });
 
