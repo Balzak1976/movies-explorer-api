@@ -1,0 +1,12 @@
+# dependencies
+/node_modules
+
+# Ignore master key for decrypting credentials and more.
+.env
+
+# Logs
+logs
+*.log
+
+# черновик
+draft
