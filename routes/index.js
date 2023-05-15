@@ -8,7 +8,7 @@ const usersRoutes = require('./users');
 const moviesRoutes = require('./movies');
 const { handleNotFoundUrl, handleErrors } = require('../middlewares/errors');
 const { limiter } = require('../middlewares/limiter');
-const { userLoginValidate, userCreateValidate } = require('../middlewares/userValidation');
+const { userLoginValidate, userCreateValidate } = require('../validation/user');
 const { requestLogger, errorLogger } = require('../middlewares/logger');
 
 // =============================================================================

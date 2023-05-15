@@ -2,7 +2,7 @@ const express = require('express');
 
 const usersRoutes = express.Router();
 const { getUser, updateUser } = require('../controllers/users');
-const { userUpdateValidate } = require('../middlewares/userValidation');
+const { userUpdateValidate } = require('../validation/user');
 
 // =============================================================================
 
