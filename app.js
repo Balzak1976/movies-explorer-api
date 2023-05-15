@@ -4,7 +4,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const routes = require('./routes/index');
 const { ALLOWED_URL } = require('./utils/constants');
-const { PORT, MONGO_URL } = require('./config');
+const { PORT, MONGO_URL } = require('./utils/config');
 
 // =============================================================================
 
