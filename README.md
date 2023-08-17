@@ -24,7 +24,7 @@
 клонировать репозиторий на удаленную ВМ
   
 ```javascript
-git clone https://github.com/Balzak1976/movies-explorer-api
+git clone https://github.com/Balzak1976/movies-explorer-api.git
 ```
 установить зависимости
 
